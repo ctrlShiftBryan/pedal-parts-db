@@ -1,0 +1,50 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("PEDAL_DATABASE_URL")
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  // output        = "./generated/prisma"
+  binaryTargets   = ["native", "debian-openssl-1.1.x"]
+  previewFeatures = ["metrics", "tracing"]
+}
+
+model Part {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  // Define your fields here
+  type      String
+  value     String
+  order     Int
+  ordered   Boolean     @default(false)
+  PedalPart PedalPart[]
+
+  @@unique([type, value])
+}
+
+model Pedal {
+  id          Int         @id @default(autoincrement())
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  // Define your fields here
+  name        String
+  pcbUrl      String?
+  buildDocUrl String?
+  PedalPart   PedalPart[]
+}
+
+model PedalPart {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  // Define your fields here
+  pedalId   Int
+  partId    Int
+  pedal     Pedal    @relation(fields: [pedalId], references: [id])
+  part      Part     @relation(fields: [partId], references: [id])
+  count     Int
+  partNum   String
+  polarized Boolean  @default(false) // Add this line
+}
