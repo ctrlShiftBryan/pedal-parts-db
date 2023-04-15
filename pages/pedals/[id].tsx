@@ -8,6 +8,7 @@ import AddPartForm from '../../components/AddPartForm';
 import BulkAddPartsForm from '../../components/BulkAddPartsForm';
 import PartsList from '../../components/PartsList';
 import PedalForm from '../../components/PedalForm';
+import Link from 'next/link';
 
 type EditPedalPageProps = {
   pedal: PedalDto;
@@ -59,6 +60,7 @@ export default function EditPedalPage({ pedal: initialPedal }: EditPedalPageProp
   return (
     <div className="container flex flex-row py-6 mx-auto">
       <div>
+        <Link href="/pedals">Home</Link>
         <h1 className="mb-6 text-3xl">Edit Pedal</h1>
         <PedalForm initialPedal={initialPedal} id={id} router={router} />
         <div className="mt-6">

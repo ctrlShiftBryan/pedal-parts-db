@@ -1,6 +1,7 @@
 // components/PedalForm.tsx
 
 import { Pedal } from '@prisma/client';
+import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
 type PedalFormProps = {
@@ -44,7 +45,9 @@ export default function PedalForm({ initialPedal, id, router }: PedalFormProps) 
         className="w-full p-2 mb-4 border border-gray-300 rounded"
       />
       <div className="flex flex-col mb-4">
-        <label htmlFor="pcbUrl">PCB URL</label>
+        {
+          pcbUrl ? <Link target='_blank' href={pcbUrl}>PCB</Link> : <label htmlFor="pcbUrl">PCB URL</label>
+        }
         <input
           id="pcbUrl"
           name="pcbUrl"
@@ -56,7 +59,9 @@ export default function PedalForm({ initialPedal, id, router }: PedalFormProps) 
         />
       </div>
       <div className="flex flex-col mb-4">
-        <label htmlFor="buildDocUrl">Build Doc URL</label>
+        {
+          buildDocUrl ? <Link target="_blank" href={buildDocUrl}>BUILD</Link> : <label htmlFor="pcbUrl">BUILD DOCK URL</label>
+        }
         <input
           id="buildDocUrl"
           name="buildDocUrl"
